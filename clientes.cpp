@@ -56,16 +56,20 @@ void testarVerificação() {
 	std::cout << "\n";
 }
 
-int main() {
-	SetConsoleOutputCP(65001);
-
-	testarVerificação();
-
+void testarCadastro() {
 	char nome[TAMANHO_NOME] = "Nomedegente Sobrenomedeanimal";
 	char cpf[TAMANHO_CPF] = "12345678901";
 
 	std::cout << "Cadastrar Cliente: " << nome << " CPF: " << cpf << " Resultado: " << (cadastrarCliente(nome, cpf) ? "Sucesso" : "Falha");
 	std::cout << "\n";
+}
+
+int main() {
+	SetConsoleOutputCP(65001);
+
+	testarVerificação();
+
+	testarCadastro();
 
 	return 0;
 }
