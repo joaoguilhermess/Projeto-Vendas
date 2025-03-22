@@ -49,7 +49,7 @@ bool cadastrarCliente(const char* nome, const char* cpf) {
 	return true;
 }
 
-void testarVerificação() {
+void testarVerificacao() {
 	char cpf[TAMANHO_CPF] = "001";
 
 	std::cout << "Verificar Cliente: "<< cpf << " Resultado: " << (verificarCliente(cpf) ? "Existe" : "Não Existe");
@@ -67,7 +67,7 @@ void testarCadastro() {
 int main() {
 	SetConsoleOutputCP(65001);
 
-	testarVerificação();
+	testarVerificacao();
 
 	testarCadastro();
 
