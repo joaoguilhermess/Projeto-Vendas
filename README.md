@@ -26,7 +26,7 @@ Arquivo CPP com a definição das funções:
 Arquivo Header com a definição das respectivas constantes, funções e bibliotecas.
 
 ### clientes.txt:
-Referente Ao Clientes Salvos.
+Referente Aos Clientes Salvos.
 
 #### Estrutura:
 
