@@ -21,6 +21,7 @@ Saida:
 # clientes.txt: Referente Ao Clientes Salvos;
 
 Estrutura:
+
 	CPF do Cliente
 	NOME do Cliente
 	CPF do Cliente
