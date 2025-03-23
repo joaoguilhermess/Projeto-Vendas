@@ -1,7 +1,6 @@
 Arquivos Referentes ao Módulo de Cadastro de Clientes para o Projeto de Vendas da matéria Programação 2
 
-# clientes.cpp:
-	Arquivo CPP com a definição das funções:
+# clientes.cpp: Arquivo CPP com a definição das funções:
 
 	bool verificarCliente(const char* cpf);
 		Entrada:
@@ -15,11 +14,9 @@ Arquivos Referentes ao Módulo de Cadastro de Clientes para o Projeto de Vendas 
 		Saida:
 			Booleano representado o sucesso da operação de Cadastro de Cliente
 
-# clientes.h
-	Arquivo Header com a definição das respectivas constantes, funções e bibliotecas; 
+# clientes.h: Arquivo Header com a definição das respectivas constantes, funções e bibliotecas; 
 
-# clientes.txt
-	Referente Ao Clientes Salvos;
+# clientes.txt: Referente Ao Clientes Salvos;
 
 	Estrutura:
 		CPF do Cliente
