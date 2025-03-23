@@ -1,4 +1,4 @@
-# Arquivos Referentes ao Módulo de Cadastro de Clientes 
+# Arquivos Referentes ao Módulo de Cadastro de Clientes
 ## Projeto de Vendas da Matéria Programação 2
 
 ### clientes.cpp:
@@ -23,10 +23,10 @@ Arquivo CPP com a definição das funções:
 	Booleano representado o sucesso da operação de Cadastro de Cliente
 
 ### clientes.h: 
-Arquivo Header com a definição das respectivas constantes, funções e bibliotecas; 
+Arquivo Header com a definição das respectivas constantes, funções e bibliotecas.
 
 ### clientes.txt:
-Referente Ao Clientes Salvos;
+Referente Ao Clientes Salvos.
 
 #### Estrutura:
 
