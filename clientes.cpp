@@ -1,11 +1,7 @@
 #include <windows.h>
 #include <iostream>
-#include <fstream>
-#include <string>
 
-#define ARQUIVO_CLIENTES "clientes.txt"
-#define TAMANHO_NOME 64 + 1
-#define TAMANHO_CPF 11 + 1
+#include "clientes.h"
 
 bool verificarCliente(const char* cpf) {
 	std::ifstream clientes(ARQUIVO_CLIENTES, std::ios::in);
