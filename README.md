@@ -4,12 +4,16 @@
 ### clientes.cpp:
 Arquivo CPP com a definição das funções:
 
+Verificar Cliente
+
 	bool verificarCliente(const char* cpf);
 
 #### Entrada:
 	CPF do Cliente
 #### Saida:
 	Booleano para a existencia de um Cliente com o respectivo CPF
+
+Cadastrar Cliente
 
 	bool cadastrarCliente(const char* nome, const char* cpf);
 
