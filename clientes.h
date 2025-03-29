@@ -28,4 +28,5 @@ bool pesquisarCliente(std::vector<Cliente>& clientes, Cliente& cliente, int id, 
 bool cadastrarCliente(std::vector<Cliente>& clientes, Cliente& cliente, const char* nome, const char* cpf);
 
 bool excluirCliente(std::vector<Cliente>& clientes, Cliente& cliente);
+
 #endif
