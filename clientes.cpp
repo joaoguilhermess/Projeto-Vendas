@@ -106,6 +106,8 @@ bool excluirCliente(std::vector<Cliente>& clientes, Cliente& cliente) {
 	return false;
 }
 
+// Parte a ser Excluida na Versão Definitiva Abaixo:
+
 void testarPesquisa(std::vector<Cliente>& clientes) {
 	int id = 0;
 	const char* cpf = "998.028.014-83";
