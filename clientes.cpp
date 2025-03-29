@@ -92,11 +92,11 @@ bool cadastrarCliente(std::vector<Cliente>& clientes, Cliente& cliente, const ch
 	return salvarClientes(clientes);
 }
 
-bool excluirCliente(std::vector<Cliente>& clientes, Cliente& cliente) {
+bool excluirCliente(std::vector<Cliente>& clientes, int id) {
 	int quantidade = clientes.size();
 
 	for (int i = 0; i < quantidade; i++) {
-		if (clientes[i].id == cliente.id) {
+		if (clientes[i].id == id) {
 			clientes.erase(clientes.begin() + i);
 
 			return salvarClientes(clientes);

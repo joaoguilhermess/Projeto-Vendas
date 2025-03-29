@@ -4,23 +4,50 @@
 ### clientes.cpp:
 Arquivo CPP com a definição das funções:
 
-### Verificar Cliente:
+### Ler Clientes:
 
-	bool verificarCliente(const char* cpf);
-
-#### Entrada:
-	CPF do Cliente
-#### Saida:
-	Booleano para a existencia de um Cliente com o respectivo CPF
-
-### Cadastrar Cliente:
-
-	bool cadastrarCliente(const char* nome, const char* cpf);
+	std::vector<Cliente> lerClientes();
 
 #### Entrada:
-	Nome do Cliente e CPF do Cliente
+	Nada
 #### Saida:
-	Booleano representado o sucesso da operação de Cadastro de Cliente
+	Vetor da struct Cliente
+
+### Salvar Clientes:
+
+	bool salvarClientes(std::vector<Cliente>& clientes);
+
+#### Entrada:
+	Vetor da struct Cliente
+#### Saida:
+	Booleano indicando Sucesso na Operação
+
+### Pesquisar Cliente:
+
+	bool pesquisarCliente(std::vector<Cliente>& clientes, Cliente& cliente, int id, const char* cpf);
+
+#### Entrada:
+	Vetor da struct Cliente, struct de Cliente na qual o cliente pesquisado vai ser definido caso sucesso, ID do Cliente, CPF do Cliente
+#### Saida:
+	Booleano indicando Sucesso na Operação
+
+### Cadastar Cliente:
+
+	bool cadastrarCliente(std::vector<Cliente>& clientes, Cliente& cliente, const char* nome, const char* cpf);
+
+#### Entrada:
+	Vetor da struct Cliente, struct de Cliente na qual o cliente cadastrado vai ser definido caso sucesso, NOME do Cliente, CPF do Cliente
+#### Saida:
+	Booleano indicando Sucesso na Operação
+
+### Excluir Cliente:
+
+	bool excluirCliente(std::vector<Cliente>& clientes, int id);
+
+#### Entrada:
+	Vetor da struct Cliente, ID do respectivo cliente a ser deletado;
+#### Saida:
+	Booleano indicando Sucesso na Operação
 
 ### clientes.h: 
 Arquivo Header com a definição das respectivas constantes, funções e bibliotecas.
@@ -30,10 +57,13 @@ Referente Aos Clientes Salvos.
 
 #### Estrutura:
 
-	CPF do Cliente
+	ID do Cliente
 	NOME do Cliente
 	CPF do Cliente
+	ID do Cliente
 	NOME do Cliente
 	CPF do Cliente
+	ID do Cliente
 	NOME do Cliente
+	CPF do Cliente	
 	...
