@@ -19,10 +19,13 @@ struct Cliente {
 	char cpf[TAMANHO_CPF];
 };
 
-bool pesquisarCliente(Cliente& cliente, int _id, const char* _cpf);
+std::vector<Cliente> lerClientes();
 
-bool cadastrarCliente(const char* nome, const char* cpf);
+bool salvarClientes(std::vector<Cliente>& clientes);
 
-void testarVerificacao();
-void testarCadastro();
+bool pesquisarCliente(std::vector<Cliente>& clientes, Cliente& cliente, int id, const char* cpf);
+
+bool cadastrarCliente(std::vector<Cliente>& clientes, Cliente& cliente, const char* nome, const char* cpf);
+
+bool excluirCliente(std::vector<Cliente>& clientes, Cliente& cliente);
 #endif
