@@ -62,6 +62,20 @@ Arquivo Header com a definição das respectivas constantes, funções e bibliot
 ### clientes.txt:
 Referente Aos Clientes Salvos.
 
+#### struct Clientes:
+	struct Cliente {
+		int id;
+		char nome[TAMANHO_NOME];
+		char cpf[TAMANHO_CPF];
+	};
+
+#### struct ListaClientes:
+	struct ListaClientes {
+		int tamanho;
+		int quantidade;
+		Cliente* clientes;
+	};
+
 #### Estrutura:
 
 	ID do Cliente
