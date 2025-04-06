@@ -25,14 +25,16 @@ struct ListaClientes {
 	Cliente* clientes;
 };
 
-// ListaClientes lerClientes();
+void adicionarCliente(ListaClientes& lista, Cliente& cliente);
 
-// bool salvarClientes(Cliente* clientes);
+ListaClientes lerClientes();
 
-// bool pesquisarCliente(Cliente* clientes, Cliente& cliente, int id, const char* cpf);
+bool salvarClientes(ListaClientes& lista);
 
-// bool cadastrarCliente(Clientes clientes, Cliente& cliente, const char* nome, const char* cpf);
+bool pesquisarCliente(ListaClientes& lista, Cliente& cliente, int id, const char* cpf);
 
-// bool excluirCliente(Cliente* clientes, int id);
+bool cadastrarCliente(ListaClientes& lista, Cliente& cliente, const char* nome, const char* cpf);
+
+bool excluirCliente(ListaClientes& lista, Cliente& cliente);
 
 #endif
