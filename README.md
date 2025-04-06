@@ -9,7 +9,7 @@ Arquivo CPP com a definição das funções:
 	void adicionarCliente(ListaClientes& lista, Cliente& cliente);
 
 #### Observação:
-	Função de uso inteiro, não utilize;
+	Função de uso interno, não utilize!
 
 ### Ler Clientes:
 
