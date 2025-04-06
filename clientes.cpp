@@ -1,11 +1,32 @@
 #include "clientes.h"
 
-std::vector<Cliente> lerClientes() {
+void adicionarCliente(ListaClientes& lista, Cliente& cliente) {
+	if (lista.tamanho == lista.quantidade) {
+		int tamanho = lista.tamanho + PARTE_CLIENTES;
+
+		Cliente* novosClientes = new Cliente[tamanho];
+
+		for (int i = 0; i < lista.quantidade; i++) novosClientes[i] = lista.clientes[i];
+
+		delete[] lista.clientes;
+		
+		lista.tamanho = tamanho;
+		lista.clientes = novosClientes;
+	}
+
+	lista.clientes[lista.quantidade++] = cliente;
+}
+
+ListaClientes lerClientes() {
 	std::ifstream arquivo(ARQUIVO_CLIENTES, std::ios::in);
 
-	std::vector<Cliente> clientes;
+	ListaClientes lista;
 
-	if (!arquivo) return clientes;
+	lista.tamanho = PARTE_CLIENTES;
+	lista.quantidade = 0;
+	lista.clientes = new Cliente[lista.tamanho];
+
+	if (!arquivo) return lista;
 
 	std::string idTemp;
 	std::string nomeTemp;
@@ -28,27 +49,25 @@ std::vector<Cliente> lerClientes() {
 		std::fill(std::begin(cliente.cpf), std::end(cliente.cpf), '\0');
 		std::copy(cpfTemp.begin(), cpfTemp.end(), cliente.cpf);
 
-		clientes.push_back(cliente);
+		adicionarCliente(lista, cliente);
 	}
 
 	arquivo.close();
 
-	return clientes;
+	return lista;
 }
 
-bool salvarClientes(std::vector<Cliente>& clientes) {
+bool salvarClientes(ListaClientes& lista) {
 	std::ofstream arquivo(ARQUIVO_CLIENTES, std::ios::out | std::ios::trunc);
 
 	if (!arquivo) return false;
 
-	int quantidade = clientes.size();
-
-	for (int i = 0; i < quantidade; i++) {
-		arquivo << clientes[i].id;
+	for (int i = 0; i < lista.quantidade; i++) {
+		arquivo << lista.clientes[i].id;
 		arquivo << "\n";
-		arquivo << clientes[i].nome;
+		arquivo << lista.clientes[i].nome;
 		arquivo << "\n";
-		arquivo << clientes[i].cpf;
+		arquivo << lista.clientes[i].cpf;
 		arquivo << "\n";
 	}
 
@@ -57,12 +76,10 @@ bool salvarClientes(std::vector<Cliente>& clientes) {
 	return true;
 }
 
-bool pesquisarCliente(std::vector<Cliente>& clientes, Cliente& cliente, int id, const char* cpf) {
-	int quantidade = clientes.size();
-
-	for (int i = 0; i < quantidade; i++) {
-		if (clientes[i].id == id || (std::strlen(clientes[i].cpf) == std::strlen(cpf) && std::equal(std::begin(clientes[i].cpf), std::end(clientes[i].cpf), cpf))) {
-			cliente = clientes[i];
+bool pesquisarCliente(ListaClientes& lista, Cliente& cliente, int id, const char* cpf) {
+	for (int i = 0; i < lista.quantidade; i++) {
+		if (lista.clientes[i].id == id || (std::strlen(lista.clientes[i].cpf) == std::strlen(cpf) && std::equal(std::begin(lista.clientes[i].cpf), std::end(lista.clientes[i].cpf), cpf))) {
+			cliente = lista.clientes[i];
 
 			return true;
 		}
@@ -71,14 +88,12 @@ bool pesquisarCliente(std::vector<Cliente>& clientes, Cliente& cliente, int id, 
 	return false;
 }
 
-bool cadastrarCliente(std::vector<Cliente>& clientes, Cliente& cliente, const char* nome, const char* cpf) {
+bool cadastrarCliente(ListaClientes& lista, Cliente& cliente, const char* nome, const char* cpf) {
 	if (std::strlen(nome) == 0 || std::strlen(nome) > TAMANHO_NOME - 1) return false;
 	if (std::strlen(cpf) != TAMANHO_CPF - 1) return false;
-	if (pesquisarCliente(clientes, cliente, 0, cpf)) return false;
+	if (pesquisarCliente(lista, cliente, 0, cpf)) return false;
 
-	int quantidade = clientes.size();
-
-	if (quantidade > 0) cliente.id = clientes[quantidade - 1].id + 1;
+	if (lista.quantidade > 0) cliente.id = lista.clientes[lista.quantidade - 1].id + 1;
 	else cliente.id = 1;
 
 	std::fill(std::begin(cliente.nome), std::end(cliente.nome), '\0');
@@ -87,19 +102,21 @@ bool cadastrarCliente(std::vector<Cliente>& clientes, Cliente& cliente, const ch
 	std::fill(std::begin(cliente.cpf), std::end(cliente.cpf), '\0');
 	std::copy(cpf, cpf + strlen(cpf), cliente.cpf);
 
-	clientes.push_back(cliente);
+	adicionarCliente(lista, cliente);
 
-	return salvarClientes(clientes);
+	return salvarClientes(lista);
 }
 
-bool excluirCliente(std::vector<Cliente>& clientes, int id) {
-	int quantidade = clientes.size();
+bool excluirCliente(ListaClientes& lista, Cliente& cliente) {
+	for (int i = 0; i < lista.quantidade; i++) {
+		if (lista.clientes[i].id == cliente.id) {
+			for (int i2 = i; i2 < lista.quantidade - 1; i2++) {
+				lista.clientes[i2] = lista.clientes[i2 + 1];
+			}
 
-	for (int i = 0; i < quantidade; i++) {
-		if (clientes[i].id == id) {
-			clientes.erase(clientes.begin() + i);
+			lista.quantidade -= 1;
 
-			return salvarClientes(clientes);
+			return salvarClientes(lista);
 		}
 	}
 
@@ -108,13 +125,13 @@ bool excluirCliente(std::vector<Cliente>& clientes, int id) {
 
 // Parte a ser Excluida na Versão Definitiva Abaixo:
 
-void testarPesquisa(std::vector<Cliente>& clientes) {
+void testarPesquisa(ListaClientes& lista) {
 	int id = 0;
 	const char* cpf = "998.028.014-83";
 
 	Cliente cliente;
 
-	bool existe = pesquisarCliente(clientes, cliente, id, cpf);
+	bool existe = pesquisarCliente(lista, cliente, id, cpf);
 
 	if (existe) {
 		std::cout << "o Cliente Existe";
@@ -131,18 +148,18 @@ void testarPesquisa(std::vector<Cliente>& clientes) {
 	}
 }
 
-void testarCadastro(std::vector<Cliente>& clientes, Cliente& cliente) {
+void testarCadastro(ListaClientes& lista, Cliente& cliente) {
 	const char* nome = "Nomedegente Sobrenomedeanimal";
 	const char* cpf = "123.456.789-01";
 
-	bool sucesso = cadastrarCliente(clientes, cliente, nome, cpf);
+	bool sucesso = cadastrarCliente(lista, cliente, nome, cpf);
 
 	std::cout << "Cadastrar Cliente: " << nome << " CPF: " << cpf << " Resultado: " << (sucesso ? "Sucesso" : "Falha");
 	std::cout << "\n";
 }
 
-void testarExcluir(std::vector<Cliente>& clientes, Cliente& cliente) {
-	bool sucesso = excluirCliente(clientes, cliente);
+void testarExcluir(ListaClientes& lista, Cliente& cliente) {
+	bool sucesso = excluirCliente(lista, cliente);
 
 	std::cout << "Excluir Cliente: " << cliente.id << " Resultado: " << (sucesso ? "Sucesso" : "Falha");
 	std::cout << "\n";
@@ -151,15 +168,31 @@ void testarExcluir(std::vector<Cliente>& clientes, Cliente& cliente) {
 int main() {
 	SetConsoleOutputCP(65001);
 
-	std::vector<Cliente> clientes = lerClientes();
+	ListaClientes lista = lerClientes();
 
-	testarPesquisa(clientes);
+	std::cout << lista.tamanho;
+	std::cout << "\n";
+	std::cout << lista.quantidade;
+	std::cout << "\n";
+
+	for (int i = 0; i < lista.quantidade; i++) {
+		std::cout << lista.clientes[i].id;
+		std::cout << "\n";
+		std::cout << lista.clientes[i].nome;
+		std::cout << "\n";
+		std::cout << lista.clientes[i].cpf;
+		std::cout << "\n";
+	}
+
+	testarPesquisa(lista);
 
 	Cliente cliente;
 
-	testarCadastro(clientes, cliente);
+	testarCadastro(lista, cliente);
 
-	testarExcluir(clientes, cliente);
+	Cliente cliente2 = {1};
+
+	testarExcluir(lista, cliente2);
 
 	return 0;
 }

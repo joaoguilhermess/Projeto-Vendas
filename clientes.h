@@ -7,11 +7,11 @@
 #include <fstream>
 #include <cstring>
 #include <string>
-#include <vector>
 
 #define ARQUIVO_CLIENTES "clientes.txt"
 #define TAMANHO_NOME 64 + 1
 #define TAMANHO_CPF 14 + 1
+#define PARTE_CLIENTES 64
 
 struct Cliente {
 	int id;
@@ -19,14 +19,20 @@ struct Cliente {
 	char cpf[TAMANHO_CPF];
 };
 
-std::vector<Cliente> lerClientes();
+struct ListaClientes {
+	int tamanho;
+	int quantidade;
+	Cliente* clientes;
+};
 
-bool salvarClientes(std::vector<Cliente>& clientes);
+// ListaClientes lerClientes();
 
-bool pesquisarCliente(std::vector<Cliente>& clientes, Cliente& cliente, int id, const char* cpf);
+// bool salvarClientes(Cliente* clientes);
 
-bool cadastrarCliente(std::vector<Cliente>& clientes, Cliente& cliente, const char* nome, const char* cpf);
+// bool pesquisarCliente(Cliente* clientes, Cliente& cliente, int id, const char* cpf);
 
-bool excluirCliente(std::vector<Cliente>& clientes, int id);
+// bool cadastrarCliente(Clientes clientes, Cliente& cliente, const char* nome, const char* cpf);
+
+// bool excluirCliente(Cliente* clientes, int id);
 
 #endif
