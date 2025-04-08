@@ -68,9 +68,6 @@ Arquivo CPP com a definição das funções:
 ### clientes.h: 
 Arquivo Header com a definição das respectivas constantes, funções e bibliotecas.
 
-### clientes.txt:
-Referente Aos Clientes Salvos.
-
 #### struct Clientes:
 	struct Cliente {
 		int id;
@@ -84,6 +81,9 @@ Referente Aos Clientes Salvos.
 		int quantidade;
 		Cliente* clientes;
 	};
+
+### clientes.txt:
+Referente Aos Clientes Salvos.
 
 #### Estrutura:
 
