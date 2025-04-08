@@ -27,6 +27,8 @@ struct ListaClientes {
 
 void adicionarCliente(ListaClientes& lista, Cliente& cliente);
 
+void limparClientes(ListaClientes& lista);
+
 ListaClientes lerClientes();
 
 bool salvarClientes(ListaClientes& lista);

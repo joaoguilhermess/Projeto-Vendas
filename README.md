@@ -11,6 +11,15 @@ Arquivo CPP com a definição das funções:
 #### Observação:
 	Função de uso interno, não utilize!
 
+### Limpar Clientes:
+
+	void limparClientes(ListaClientes& lista);
+
+#### Entrada:
+	struct ListaClientes que contem todos os clientes
+#### Saida:
+	Memória usada pela struct ListaClientes limpa
+
 ### Ler Clientes:
 
 	ListaClientes lerClientes();

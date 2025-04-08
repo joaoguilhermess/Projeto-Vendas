@@ -17,6 +17,12 @@ void adicionarCliente(ListaClientes& lista, Cliente& cliente) {
 	lista.clientes[lista.quantidade++] = cliente;
 }
 
+void limparClientes(ListaClientes& lista) {
+	delete[] lista.clientes;
+
+	lista.clientes = nullptr;
+}
+
 ListaClientes lerClientes() {
 	std::ifstream arquivo(ARQUIVO_CLIENTES, std::ios::in);
 
