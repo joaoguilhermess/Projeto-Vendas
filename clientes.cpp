@@ -1,28 +1,5 @@
 #include "clientes.h"
 
-void adicionarCliente(ListaClientes& lista, Cliente& cliente) {
-	if (lista.tamanho == lista.quantidade) {
-		int tamanho = lista.tamanho + PARTE_CLIENTES;
-
-		Cliente* novosClientes = new Cliente[tamanho];
-
-		for (int i = 0; i < lista.quantidade; i++) novosClientes[i] = lista.clientes[i];
-
-		delete[] lista.clientes;
-		
-		lista.tamanho = tamanho;
-		lista.clientes = novosClientes;
-	}
-
-	lista.clientes[lista.quantidade++] = cliente;
-}
-
-void limparClientes(ListaClientes& lista) {
-	delete[] lista.clientes;
-
-	lista.clientes = nullptr;
-}
-
 ListaClientes lerClientes() {
 	std::ifstream arquivo(ARQUIVO_CLIENTES, std::ios::in);
 
@@ -63,37 +40,6 @@ ListaClientes lerClientes() {
 	return lista;
 }
 
-bool salvarClientes(ListaClientes& lista) {
-	std::ofstream arquivo(ARQUIVO_CLIENTES, std::ios::out | std::ios::trunc);
-
-	if (!arquivo) return false;
-
-	for (int i = 0; i < lista.quantidade; i++) {
-		arquivo << lista.clientes[i].id;
-		arquivo << "\n";
-		arquivo << lista.clientes[i].nome;
-		arquivo << "\n";
-		arquivo << lista.clientes[i].cpf;
-		arquivo << "\n";
-	}
-
-	arquivo.close();
-
-	return true;
-}
-
-bool pesquisarCliente(ListaClientes& lista, Cliente& cliente, int id, const char* cpf) {
-	for (int i = 0; i < lista.quantidade; i++) {
-		if (lista.clientes[i].id == id || (std::strlen(lista.clientes[i].cpf) == std::strlen(cpf) && std::equal(std::begin(lista.clientes[i].cpf), std::end(lista.clientes[i].cpf), cpf))) {
-			cliente = lista.clientes[i];
-
-			return true;
-		}
-	}
-
-	return false;
-}
-
 bool cadastrarCliente(ListaClientes& lista, Cliente& cliente, const char* nome, const char* cpf) {
 	if (std::strlen(nome) == 0 || std::strlen(nome) > TAMANHO_NOME - 1) return false;
 	if (std::strlen(cpf) != TAMANHO_CPF - 1) return false;
@@ -113,6 +59,18 @@ bool cadastrarCliente(ListaClientes& lista, Cliente& cliente, const char* nome, 
 	return salvarClientes(lista);
 }
 
+bool pesquisarCliente(ListaClientes& lista, Cliente& cliente, int id, const char* cpf) {
+	for (int i = 0; i < lista.quantidade; i++) {
+		if (lista.clientes[i].id == id || (std::strlen(lista.clientes[i].cpf) == std::strlen(cpf) && std::equal(std::begin(lista.clientes[i].cpf), std::end(lista.clientes[i].cpf), cpf))) {
+			cliente = lista.clientes[i];
+
+			return true;
+		}
+	}
+
+	return false;
+}
+
 bool excluirCliente(ListaClientes& lista, Cliente& cliente) {
 	for (int i = 0; i < lista.quantidade; i++) {
 		if (lista.clientes[i].id == cliente.id) {
@@ -129,76 +87,44 @@ bool excluirCliente(ListaClientes& lista, Cliente& cliente) {
 	return false;
 }
 
-// Parte a ser Excluida na Versão Definitiva Abaixo:
+void adicionarCliente(ListaClientes& lista, Cliente& cliente) {
+	if (lista.tamanho == lista.quantidade) {
+		int tamanho = lista.tamanho + PARTE_CLIENTES;
 
-void testarPesquisa(ListaClientes& lista) {
-	int id = 0;
-	const char* cpf = "998.028.014-83";
+		Cliente* novosClientes = new Cliente[tamanho];
 
-	Cliente cliente;
+		for (int i = 0; i < lista.quantidade; i++) novosClientes[i] = lista.clientes[i];
 
-	bool existe = pesquisarCliente(lista, cliente, id, cpf);
-
-	if (existe) {
-		std::cout << "o Cliente Existe";
-		std::cout << "\n";
-		std::cout << "Id: " << cliente.id;
-		std::cout << "\n";
-		std::cout << "Nome: " << cliente.nome;
-		std::cout << "\n";
-		std::cout << "CPF: " << cliente.cpf;
-		std::cout << "\n";
-	} else {
-		std::cout << "o Cliente Não Existe";
-		std::cout << "\n";
+		delete[] lista.clientes;
+		
+		lista.tamanho = tamanho;
+		lista.clientes = novosClientes;
 	}
+
+	lista.clientes[lista.quantidade++] = cliente;
 }
 
-void testarCadastro(ListaClientes& lista, Cliente& cliente) {
-	const char* nome = "Nomedegente Sobrenomedeanimal";
-	const char* cpf = "123.456.789-01";
+bool salvarClientes(ListaClientes& lista) {
+	std::ofstream arquivo(ARQUIVO_CLIENTES, std::ios::out | std::ios::trunc);
 
-	bool sucesso = cadastrarCliente(lista, cliente, nome, cpf);
-
-	std::cout << "Cadastrar Cliente: " << nome << " CPF: " << cpf << " Resultado: " << (sucesso ? "Sucesso" : "Falha");
-	std::cout << "\n";
-}
-
-void testarExcluir(ListaClientes& lista, Cliente& cliente) {
-	bool sucesso = excluirCliente(lista, cliente);
-
-	std::cout << "Excluir Cliente: " << cliente.id << " Resultado: " << (sucesso ? "Sucesso" : "Falha");
-	std::cout << "\n";
-}
-
-int main() {
-	SetConsoleOutputCP(65001);
-
-	ListaClientes lista = lerClientes();
-
-	std::cout << lista.tamanho;
-	std::cout << "\n";
-	std::cout << lista.quantidade;
-	std::cout << "\n";
+	if (!arquivo) return false;
 
 	for (int i = 0; i < lista.quantidade; i++) {
-		std::cout << lista.clientes[i].id;
-		std::cout << "\n";
-		std::cout << lista.clientes[i].nome;
-		std::cout << "\n";
-		std::cout << lista.clientes[i].cpf;
-		std::cout << "\n";
+		arquivo << lista.clientes[i].id;
+		arquivo << "\n";
+		arquivo << lista.clientes[i].nome;
+		arquivo << "\n";
+		arquivo << lista.clientes[i].cpf;
+		arquivo << "\n";
 	}
 
-	testarPesquisa(lista);
+	arquivo.close();
 
-	Cliente cliente;
+	return true;
+}
 
-	testarCadastro(lista, cliente);
+void limparClientes(ListaClientes& lista) {
+	delete[] lista.clientes;
 
-	Cliente cliente2 = {1};
-
-	testarExcluir(lista, cliente2);
-
-	return 0;
+	lista.clientes = nullptr;
 }
